@@ -14,7 +14,6 @@
 NoDetours demonstrates **production-grade LLM orchestration at scale**, seamlessly integrating OpenAI (GPT-3.5/4), Anthropic Claude, and other providers through a unified interface. The system aggregates real-time travel data from 5+ APIs in parallel, generates personalized itineraries, and includes a built-in evaluation framework for systematic LLM quality assessment. This project showcases full-stack expertise (FastAPI backend, vanilla JS frontend, CLI interface) alongside thoughtful system design patterns relevant to any data-intensive AI application.
 
 ### Project Statistics
-- **4,200+** lines of production-grade Python code
 - **6** integrated LLM provider support
 - **5+** external API integrations (weather, maps, search, scraping)
 - **3** deployment modes: Web UI + REST API + CLI
