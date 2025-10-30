@@ -1,0 +1,84 @@
+# Environment variables (NEVER commit API keys!)
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Project-specific
+evaluation_runs/
+*.log
+logs/
+data/
+temp/
+cache/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+.env.backup
+
+# Development tools
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Keep these directories but ignore content
+evaluation_runs/.gitkeep
+logs/.gitkeep
+data/.gitkeep

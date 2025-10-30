@@ -1,0 +1,121 @@
+services:
+  - type: web
+    name: nodetours
+    runtime: python
+    pythonVersion: 3.9
+
+    # Build configuration
+    buildCommand: |
+      pip install --upgrade pip &&
+      pip install -r requirements.txt
+
+    # Start command
+    startCommand: |
+      gunicorn -w 4 -b 0.0.0.0:$PORT --timeout 120 --access-logfile - api.app:app
+
+    # Port configuration
+    port: 8000
+
+    # Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9
+      - key: PYTHONUNBUFFERED
+        value: "true"
+      - key: LOG_LEVEL
+        value: INFO
+      - key: APP_ENV
+        value: production
+      - key: WORKERS
+        value: "4"
+
+      # LLM Provider Keys (Add your actual keys in Render dashboard)
+      - key: OPENAI_API_KEY
+        sync: false  # Set in Render dashboard
+      - key: ANTHROPIC_API_KEY
+        sync: false  # Set in Render dashboard
+
+      # External API Keys (Add your actual keys in Render dashboard)
+      - key: WEATHER_API_KEY
+        sync: false  # Set in Render dashboard
+      - key: MAPS_API_KEY
+        sync: false  # Set in Render dashboard
+      - key: SEARCH_API_KEY
+        sync: false  # Set in Render dashboard
+      - key: SEARCH_ENGINE_ID
+        sync: false  # Set in Render dashboard
+      - key: FIRECRAWL_API_KEY
+        sync: false  # Set in Render dashboard
+
+    # Health check
+    healthCheckPath: /
+
+    # Auto-restart configuration
+    autoDeploy: true
+
+    # Resource configuration
+    plan: standard  # Options: free, standard, pro
+
+    # Disk configuration (persistent storage)
+    disk:
+      name: nodetours-data
+      mountPath: /data
+      sizeGB: 1  # 1GB should be sufficient for logs and evaluation runs
+
+    # Scaling configuration
+    scaling:
+      minInstances: 1
+      maxInstances: 3  # Auto-scale up to 3 instances if needed
+      targetMemoryUtilization: 70
+      targetCpuUtilization: 70
+
+    # Timeout configuration
+    timeout: 120  # 120 seconds (2 minutes) for long requests
+
+    # Notifications
+    notifications:
+      onFail: true  # Send notification on deployment failure
+      onSuccess: false  # Don't send notification on successful deployment
+
+    # Cron jobs (optional - for periodic evaluation runs)
+    # Uncomment if you want to run evaluations periodically
+    # cronJobs:
+    #   - name: weekly-evaluation
+    #     schedule: "0 2 * * 0"  # 2 AM UTC on Sundays
+    #     command: python run_evaluation.py --config config/eval_config.yaml --sample-size 5
+
+databases:
+  # Optional: Add PostgreSQL if you want to store user data, trip history, etc.
+  # - name: nodetours-db
+  #   engine: postgres
+  #   version: "14"
+  #   plan: standard
+  #   ipWhitelist: []
+
+redirects: []  # Add any URL redirects if needed
+
+# Build options
+buildOptions:
+  # Use buildkit for faster, more efficient builds
+  useBuildKit: true
+
+# Deployment options
+deploymentOptions:
+  # Clear Docker build cache on each deployment (set to false for faster rebuilds)
+  clearDockerImageCache: false
+
+# Alerts (optional - requires Render account)
+# alerts:
+#   - name: High CPU Usage
+#     type: cpu_percentage
+#     threshold: 80
+#     duration: 300  # 5 minutes
+#   - name: Service Unavailable
+#     type: uptime
+#     threshold: 95
+#     duration: 600  # 10 minutes
+
+# Preview environments (optional - for PRs)
+# previewSettings:
+#   enabled: true
+#   prNumber: all
